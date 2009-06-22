@@ -19,7 +19,8 @@ class Feed
     @cached_tracks = (playlist/"track").map { |x|
                       { :title    => (x/"title").text, 
                         :creator  => (x/"creator").text, 
-                        :album    => (x/"album").text }}    
+                        :album    => (x/"album").text,
+                        :song_id  => (x/"song-id").text }}    
   end
   def self.should_reload?
     @cached_tracks.nil? || expired?
@@ -28,7 +29,17 @@ class Feed
     @last_update.nil? || ((Time.now - @last_update) > REFRESH_RATE_IN_SECONDS)
   end
 end
-  
+
+helpers do
+  def song_detail_uri(song_id)
+    "http://minnesota.publicradio.org/radio/services/"+
+      "the_current/playlist/song_detail.php?song_id=#{song_id}"
+  end
+  def link_to_song_detail(track)
+    "&ldquo;<a href=\"#{song_detail_uri(track[:song_id])}\">#{track[:title]}</a>&rdquo;"
+  end
+end
+
 get '/' do
   @tracks = Feed.all
   haml :index
@@ -56,7 +67,7 @@ __END__
 %ul#tracks
   - for track in @tracks
     %li
-      %h3.title== &ldquo;#{track[:title]}&rdquo;
+      %h3.title= link_to_song_detail(track)
       %h4.creator
         %span.by by
         %cite= track[:creator]
@@ -90,6 +101,8 @@ ul#tracks li
   color: #333
   width: 280px
 
+  a
+    color: #922
   .title
     color: #922
     font-weight: bold

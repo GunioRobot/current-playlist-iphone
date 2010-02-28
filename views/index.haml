@@ -1,0 +1,13 @@
+%h1
+  %a{:href=>"http://thecurrent.org"} 89.3 The Current Playlist for iPhone
+%ul#tracks
+  - for track in @tracks
+    %li
+      %h3.title><
+        &ldquo;
+        %a{:href => track[:detail_uri]}><= widont(track[:title])
+        &rdquo;
+      %h4.creator
+        %span.by by
+        %cite= widont(track[:creator])
+      %h5.album=widont(track[:album])

@@ -1,0 +1,7 @@
+Capfile
+.bundle
+log/*.log
+tmp/**/*
+.DS_Store
+.sass-cache
+Gemfile.lock

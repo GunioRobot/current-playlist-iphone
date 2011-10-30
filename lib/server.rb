@@ -13,7 +13,7 @@ helpers do
 
   # via: http://openmonkey.com/articles/2009/02/caching-and-expring-stylesheets-and-javascripts-in-sinatra
   def versioned_stylesheet(stylesheet)
-    "/stylesheets/#{stylesheet}.css?" + 
+    "/stylesheets/#{stylesheet}.css?" +
       File.mtime(File.join(Sinatra::Application.views, "stylesheets", "#{stylesheet}.sass")).to_i.to_s
   end
 end

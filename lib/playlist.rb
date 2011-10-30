@@ -3,7 +3,7 @@ require 'nokogiri'
 
 class Playlist
   DEFAULT_LIMIT = 15
-  
+
   @base_uri   = "http://minnesota.publicradio.org/radio/services/"+
                   "the_current";
 
